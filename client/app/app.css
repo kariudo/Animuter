@@ -74,3 +74,11 @@
     margin:0;
     margin-bottom: 1em;
 }
+
+.stdShadow {
+    text-shadow: rgb(3, 17, 27) 2px 2px 5px;
+}
+
+.italic {
+    font-style: italic;
+}
