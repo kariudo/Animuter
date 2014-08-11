@@ -2,26 +2,26 @@
 
 angular.module('animuterApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
+    $scope.shows = [];
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
+    $http.get('/api/shows').success(function(shows) {
+      $scope.shows = shows;
+      socket.syncUpdates('show', $scope.shows);
     });
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
+    $scope.addShow = function() {
+      if($scope.newShow === '') {
         return;
       }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
+      $http.post('/api/shows', { name: $scope.newShow });
+      $scope.newShow = '';
     };
 
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+    $scope.deleteShow = function(show) {
+      $http.delete('/api/shows/' + show._id);
     };
 
     $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('show');
     });
   });

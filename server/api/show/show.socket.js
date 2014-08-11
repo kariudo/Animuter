@@ -4,21 +4,21 @@
 
 'use strict';
 
-var Show = require('./Show.model');
+var show = require('./show.model');
 
 exports.register = function(socket) {
-  Show.schema.post('save', function (doc) {
+  show.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  Show.schema.post('remove', function (doc) {
+  show.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('Show:save', doc);
+  socket.emit('show:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('Show:remove', doc);
+  socket.emit('show:remove', doc);
 }
