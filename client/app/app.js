@@ -1,5 +1,5 @@
 'use strict';
-
+/*global angular*/
 angular.module('animuterApp', [
   'ngCookies',
   'ngResource',

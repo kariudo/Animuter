@@ -3,22 +3,50 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                 <h1 class="stdShadow">Watchlist</h1>
+                 <h1 class="">Watchlist</h1>
 
-                <p class="lead stdShadow italic">modify your list of shows to track</p>
+                <p class="lead  italic">modify your list of shows to track</p>
             </div>
             <div class="col-md-6">
-                <img src="assets/images/tv.png" alt="TV" class="img256">
+                <img src="assets/images/chaika.png" alt="eyebrows" class="img256">
             </div>
         </div>
-        <form class="show-form">
-            <p class="input-group">
-                <input type="text" class="form-control" placeholder="Add a new show here..." ng-model="newShow"></input> <span class="input-group-btn">
-            <button type="submit" class="btn btn-primary" ng-click="addShow()"><strong>&plus;</strong></button>
-          </span>
-    
-            </p>
-        </form>
+        <div class='row text-left'>
+        <!-- Input field for new shows -->
+            <form class="show-form" >
+                <div class="form-group has-feedback">
+                    <!--<label for="addshow">Add new series</label>-->
+                    <div class="input-group" class="col-md-6">
+                        <input id="addshow" type="text"
+                            class="form-control"
+                            placeholder="Search for series"
+                            ng-model="newShow"
+                            typeahead="tvdbshow as tvdbshow.SeriesName for tvdbshow in getTVDBShows($viewValue)"
+                            typeahead-loading="loadingShows"
+                            typeahead-min-length="4"
+                            typeahead-wait-ms="750"/>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" ng-click="addShow()" ng-disabled="!(newShow.SeriesName)">
+                                <strong>Add Show</strong>
+                            </button>
+                        </span>
+                    </div>
+                    <span ng-show="loadingShows" class="fa fa-spinner fa-spin form-control-feedback" style="color:black;right:100px;z-index:100;"></span>
+                </div>
+            </form>
+            <!--Details of searched show-->
+            <div ng-show="newShow.SeriesName" class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6 series-name" tooltip-position="top" tooltip-popup-delay="1000" tooltip="{{newShow.id}}">{{newShow.SeriesName}}</div>
+                    <div class="col-md-6 first-aired">[{{newShow.Network}}] {{newShow.FirstAired}}</div>
+                </div>
+                <img ng-src="http://thetvdb.com/banners/{{newShow.banner}}" style="width:100%;">
+                <h4>Description:</h4>
+                <p class="text-justify">{{newShow.Overview}}</p>
+            </div>
+            <!--full json data output from show-->
+            <pre ng-show="newShow.SeriesName" class="col-md-6">Model: {{newShow | json}}</pre>
+        </div>
     </div>
 </header>
 <div class="container">
