@@ -17,8 +17,10 @@
     position: relative;
     padding: 30px 15px;
     color: black;
-    background-color: #FAF2DD;
+    background-color: #8CDCFA;
     text-align: center;
+    background-image: url('/assets/images/ene.png');
+    background-position: -100px -100px;
     /*text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);*/
     /*background: #4393B9;*/
 }
@@ -40,4 +42,42 @@
     font-style: italic;
     text-align:right;
     padding-top:0.25em;
+}
+
+.show-box {
+    margin-top: 1em;
+}
+.show-thumb {
+    width: 75px;
+}
+
+.show-title {
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+.show-status {
+    font-size: .8em;
+}
+
+.show-date {
+    font-style: italic;
+    padding-top: 0.25em;
+}
+
+.show-episodes {
+    font-size: .8em;
+}
+
+.show-overview {
+    font-size:.75em;
+}
+.show-studio {
+    font-size: .9em;
+    color: gray;
+}
+
+.show-hr {
+    margin:0;
+    margin-bottom: 1em;
 }

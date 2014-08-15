@@ -41,39 +41,7 @@
 .img256 {
     width:256px;
 }
-.show-box {
-    margin-top: 1em;
-}
-.show-thumb {
-    width: 75px;
-}
 
-.show-title {
-    font-weight: bold;
-    font-size: 1.25em;
-}
-
-.show-status {
-    font-size: .8em;
-}
-
-.show-year {
-    font-style: italic;
-}
-
-.show-episodes {
-    font-size: .8em;
-}
-
-.show-studio {
-    font-size: .9em;
-    color: gray;
-}
-
-.show-hr {
-    margin:0;
-    margin-bottom: 1em;
-}
 
 .stdShadow {
     text-shadow: rgb(3, 17, 27) 2px 2px 5px;
@@ -81,4 +49,9 @@
 
 .italic {
     font-style: italic;
+}
+.boxShadow {
+  -moz-box-shadow:    0px 0px 10px 6px rgba(0,0,0,0.4);
+  -webkit-box-shadow: 0px 0px 10px 6px rgba(0,0,0,0.4);
+  box-shadow:         0px 0px 10px 6px rgba(0,0,0,0.4);
 }

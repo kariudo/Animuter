@@ -3,12 +3,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                 <h1 class="">Watchlist</h1>
+                 <h1 class="" style="color: rgb(101, 129, 170);">Watchlist</h1>
 
-                <p class="lead  italic">modify your list of shows to track</p>
+                <p class="lead  italic" style="color: rgb(90, 90, 90);">modify your list of shows to track</p>
             </div>
             <div class="col-md-6">
-                <img src="assets/images/chaika.png" alt="eyebrows" class="img256">
+                <!--<img src="assets/images/chaika.png" alt="eyebrows" class="img256">-->
             </div>
         </div>
         <div class='row text-left'>
@@ -24,28 +24,42 @@
                             typeahead="tvdbshow as tvdbshow.SeriesName for tvdbshow in getTVDBShows($viewValue)"
                             typeahead-loading="loadingShows"
                             typeahead-min-length="4"
-                            typeahead-wait-ms="750"/>
+                            typeahead-wait-ms="750"
+                            style="background-color: rgba(255, 255, 255, 0.7);"/>
                         <span class="input-group-btn">
                             <button type="submit" class="btn btn-primary" ng-click="addShow()" ng-disabled="!(newShow.SeriesName)">
                                 <strong>Add Show</strong>
                             </button>
                         </span>
                     </div>
-                    <span ng-show="loadingShows" class="fa fa-spinner fa-spin form-control-feedback" style="color:black;right:100px;z-index:100;"></span>
+                    <span ng-show="loadingShows">
+                        <span class="fa fa-spinner fa-spin form-control-feedback" style="color: black;right: 91px;z-index: 100; top: 0px;font-size: 1.3em;"></span>
+                        <span class="form-control-feedback" style="color: rgba(0, 0, 0, 0.3);right: 170px;z-index: 100; top: 0px;font-size: 1.3em;">Searching</span>
+                    </span>
                 </div>
             </form>
+            
+            
             <!--Details of searched show-->
             <div ng-show="newShow.SeriesName" class="col-md-6">
                 <div class="row">
                     <div class="col-md-6 series-name" tooltip-position="top" tooltip-popup-delay="1000" tooltip="{{newShow.id}}">{{newShow.SeriesName}}</div>
                     <div class="col-md-6 first-aired">[{{newShow.Network}}] {{newShow.FirstAired}}</div>
                 </div>
-                <img ng-src="http://thetvdb.com/banners/{{newShow.banner}}" style="width:100%;">
+                <img ng-src="{{(newShow && newShow.banner) && 'http://thetvdb.com/banners/'+newShow.banner || ''}}" style="width:100%;">
                 <h4>Description:</h4>
                 <p class="text-justify">{{newShow.Overview}}</p>
+                <p>Episodes: {{showDetail.Episodes.length}} ({{showDetail.Status}})</p>
             </div>
-            <!--full json data output from show-->
-            <pre ng-show="newShow.SeriesName" class="col-md-6">Model: {{newShow | json}}</pre>
+            <div ng-show="newShow.SeriesName" id='placeholder' class="col-md-6">
+                <p><h4>Genre:</h4><span ng-repeat="genre in genres"> <span class="label label-default">{{genre}}</span></span></p>
+                <p><h4>Rating:</h4><rating ng-model="showDetail.Rating" max="10" readonly="true"></rating></p>
+                <img class="boxShadow" ng-src="{{showDetail.fanart && 'http://thetvdb.com/banners/'+showDetail.fanart || ''}}" style="width:100%;">
+
+            </div>
+            <!--<div ng-show="showDetail.id" class="col-md-12">-->
+            <!--    <pre>{{showDetail | json}}</pre>-->
+            <!--</div>-->
         </div>
     </div>
 </header>
@@ -64,17 +78,19 @@
                             <img src="http://i.imgur.com/IHdgTBS.png" class="show-thumb" />
                         </div>
                         <div class="col-md-10">
-                            <div class="show-title">
-                                <a href="#" tooltip="{{show.info}}">{{show.name}}</a>
+                            <div class="row">
+                                <div class="show-title col-md-6">
+                                    <a href="#" tooltip="{{show.info}}">{{show.SeriesName}}</a>
+                                </div>
+                                <div class="show-date col-md-6 text-right">{{show.FirstAired | date : 'MMMM yyyy'}}</div>
                             </div>
                             <hr class="show-hr" />
-                            <div class="show-year">2014</div>
                             <div class="row">
-                                <div class="show-episodes col-md-6">Episodes: 5 of 12</div>
-                                <div class="show-status col-md-6">Status: Currently airing</div>
+                                <div class="show-episodes col-md-6">Episodes: {{show.Episodes.length}}</div>
+                                <div class="show-status col-md-6">Status: {{show.Status}}</div>
                             </div>
                             <p></p>
-                            <div class="show-studio">JC Staff</div>
+                            <div class="show-overview">{{show.Overview | limitTo : 350 }}<span ng-show="show.Overview.length > 350">&hellip;</span></div>
                             <button type="button" class="close" ng-click="deleteShow(show)"><i class="glyphicon glyphicon-trash"></i>
 
                             </button>

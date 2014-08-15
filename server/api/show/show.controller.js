@@ -9,8 +9,10 @@
 
 'use strict';
 
-var _ = require('lodash');
-var Show = require('./show.model');
+var _ = require('lodash'),
+  Show = require('./show.model'),
+  fs = require('fs-extra'),
+  request = require('request');
 
 var TVDBClient = require("node-tvdb"),
     client     = new TVDBClient("E638281A6C63B242");
@@ -37,6 +39,9 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   Show.create(req.body, function(err, show) {
     if(err) { return handleError(res, err); }
+    // Cache the banner images
+    var uri = 'http://thetvdb.com/banners/'+show.banner;
+    download(uri, show.banner, function() {console.log ('In theory, we just saved the banner to cache...')});
     return res.json(201, show);
   });
 };
@@ -88,3 +93,18 @@ function handleError(res, err) {
   return res.send(500, err);
 }
 
+var download = function(uri, filename, callback){
+  console.log(uri);
+  request.head(uri, function(err, res, body){
+     console.log('content-type:', res.headers['content-type']);
+     console.log('content-length:', res.headers['content-length']);
+    fs.ensureFileSync(filename, function (err) {
+      console.log(err);
+      // in theory the file should be touched by this...
+      // lets try this sync instead...
+    });
+    // then written to here...
+    request(uri).pipe(fs.createWriteStream(filename)).on('close',callback);
+
+  });
+};

@@ -3,6 +3,13 @@
 angular.module('animuterApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
     $scope.shows = [];
+    //$scope.showDetail = {};
+    $scope.$watch('newShow', function() {
+      if ($scope.newShow !== undefined && $scope.newShow.SeriesName) { 
+        // if a show has been selected a name should be defined, get detail on series
+        $scope.getTVDBDetail($scope.newShow.id);
+      };
+    });
 
     $http.get('/api/shows').success(function(shows) {
       $scope.shows = shows;
@@ -13,8 +20,9 @@ angular.module('animuterApp')
       if($scope.newShow === '') {
         return;
       }
-      console.log($scope.newShow.SeriesName);
-      $http.post('/api/shows', { name: $scope.newShow.SeriesName });
+      // save just the ID, let the serve pull the rest of the data to match that id to save time client-side
+      //$http.post('/api/shows', { id: $scope.newShow.id });
+      $http.post('/api/shows', $scope.showDetail);
       $scope.newShow = '';
     };
 
@@ -30,7 +38,7 @@ angular.module('animuterApp')
     //$scope.selected = undefined;
     $scope.getTVDBShows = function(val) {
       return $http.get('http://animuter-c9-kariudo.c9.io/api/shows/tvdb/'+val)
-        .then(function(res){
+        .then(function (res) {
           var tvdbShows = [];
           if (res.data=='null') return [];
           if (!res.data.SeriesName) {
@@ -48,8 +56,22 @@ angular.module('animuterApp')
     $scope.getTVDBDetail = function (id) {
       return $http.get('http://animuter-c9-kariudo.c9.io/api/shows/tvdb/detail/'+id)
         .then(function (res) {
-          return res.data;
+          var details = res.data;
+          $scope.showDetail = details;
+          // fine touches
+          $scope.genres = $scope.splitPipes(details.Genre);
+          $scope.showDetail.Genre = $scope.genres;
+          $scope.showDetail.Actors = $scope.splitPipes(details.Actors);
+          console.log($scope.genres);
         });
     };
   
+    $scope.splitPipes = function (str) {
+      if(str && str.length > 0) {
+        var re = /\|(.*)\|/; 
+        var subst = '$1'; 
+        str = str.replace(re, subst);
+        return str.split("|");
+      }
+    }
   });
