@@ -17,9 +17,9 @@
     position: relative;
     padding: 30px 15px;
     color: black;
-    background-color: #8CDCFA;
+    /*background-color: #8CDCFA;*/
     text-align: center;
-    background-image: url('/assets/images/ene.png');
+    /*background-image: url('/assets/images/ene.png');*/
     background-position: -100px -100px;
     /*text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);*/
     /*background: #4393B9;*/
@@ -48,7 +48,7 @@
     margin-top: 1em;
 }
 .show-thumb {
-    width: 75px;
+    width: 100px;
 }
 
 .show-title {
@@ -80,4 +80,41 @@
 .show-hr {
     margin:0;
     margin-bottom: 1em;
+}
+
+.show-list-details {
+    padding-left: 25px;
+    padding-right: 25px;
+    max-height:147px;
+}
+
+.delete {
+    font-size:.7em;
+    top:14px;
+}
+
+#banner {
+   position: relative;
+}
+#backgroundmagic {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    opacity : 0.2;
+    z-index: 0;
+}
+
+.ngnav {
+    box-shadow: black 0px -2px 7px 0px;
+}
+
+/* fix a bootstrap weird thing */
+.nav {
+    padding-right:0;
 }

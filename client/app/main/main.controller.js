@@ -54,6 +54,7 @@ angular.module('animuterApp')
     };
     
     $scope.getTVDBDetail = function (id) {
+      $scope.safeToLoad = false;
       return $http.get('http://animuter-c9-kariudo.c9.io/api/shows/tvdb/detail/'+id)
         .then(function (res) {
           var details = res.data;
@@ -62,7 +63,13 @@ angular.module('animuterApp')
           $scope.genres = $scope.splitPipes(details.Genre);
           $scope.showDetail.Genre = $scope.genres;
           $scope.showDetail.Actors = $scope.splitPipes(details.Actors);
-          console.log($scope.genres);
+          //console.log($scope.genres);
+          // setTimeout(function () {
+          //   console.log('should be safe...');
+          //   $scope.safeToLoad = true;
+            $scope.bannerImg = '/assets/cache/'+details.banner;
+          //   console.log($scope.bannerImg);
+          // }, 2000);
         });
     };
   
