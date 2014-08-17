@@ -94,15 +94,16 @@ exports.tvdbDetail = function (req, res) {
 };
 
 function handleError(res, err) {
+  console.log(err);
   return res.send(500, err);
 }
 
 function download(uri, filename, callback){
   console.log(uri);
   console.log(filename);
-  request.head(uri, function(err, res, body){
-     console.log('content-type:', res.headers['content-type']);
-     console.log('content-length:', res.headers['content-length']);
+  // request.head(uri, function(err, res, body){
+  //   console.log('content-type:', res.headers['content-type']);
+  //   console.log('content-length:', res.headers['content-length']);
         fs.ensureFile(filename, function (err) {
           if(err) console.log(err);
           // Stream in contents of image if it's not already there.
@@ -114,7 +115,7 @@ function download(uri, filename, callback){
           }
         });
 
-  });
+  // });
 };
 
 function getBanner(path, thumb) {

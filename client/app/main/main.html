@@ -2,70 +2,80 @@
 <header class="hero-unit" id="banner" ng-style="(!showDetail.fanart && {'background':'#8CDCFA url(/assets/images/ene_ghost.png) center 15px no-repeat'} || '')">
     <div id="backgroundmagic" ng-style="(showDetail.fanart && {'background-image':'url(/assets/cache/'+showDetail.fanart+')'} || '')"></div>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                 <h1 class="" style="color: rgb(101, 129, 170);">Watchlist</h1>
-
-                <p class="lead  italic" style="color: rgb(90, 90, 90);">modify your list of shows to track</p>
-            </div>
-            <div class="col-md-6">
-                <!--<img src="assets/images/chaika.png" alt="eyebrows" class="img256">-->
-            </div>
-        </div>
         <div class='row text-left'>
-        <!-- Input field for new shows -->
-            <form class="show-form" >
-                <div class="form-group has-feedback">
-                    <!--<label for="addshow">Add new series</label>-->
-                    <div class="input-group" class="col-md-6">
-                        <input id="addshow" type="text"
-                            class="form-control"
-                            placeholder="Search for series"
-                            ng-model="newShow"
-                            typeahead="tvdbshow as tvdbshow.SeriesName for tvdbshow in getTVDBShows($viewValue)"
-                            typeahead-loading="loadingShows"
-                            typeahead-min-length="4"
-                            typeahead-wait-ms="750"
-                            style="background-color: rgba(255, 255, 255, 0.7);"/>
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-primary" ng-click="addShow()" ng-disabled="!(newShow.SeriesName)">
-                                <strong>Add Show</strong>
-                            </button>
-                        </span>
-                    </div>
-                    <span ng-show="loadingShows">
-                        <span class="fa fa-spinner fa-spin form-control-feedback" style="color: black;right: 91px;z-index: 100; top: 0px;font-size: 1.3em;"></span>
-                        <span class="form-control-feedback" style="color: rgba(0, 0, 0, 0.3);right: 170px;z-index: 100; top: 0px;font-size: 1.3em;">Searching</span>
-                    </span>
-                </div>
-            </form>
-            
-            
-            <!--Details of searched show-->
-            <div ng-show="newShow.SeriesName" class="col-md-6">
-                <div class="row">
-                    <div class="col-md-10 series-name" tooltip-position="top" tooltip-popup-delay="1000" tooltip="{{newShow.id}}">{{newShow.SeriesName}}</div>
-                    <div class="col-md-2 first-aired">{{newShow.FirstAired | date: 'yyyy'}}</div>
-                </div>
-                <img ng-src="{{bannerImg}}" style="width:100%;">
-                <h4>Description:</h4>
-                <p class="text-justify">{{newShow.Overview}}</p>
-                <p>Episodes: {{showDetail.Episodes.length}} ({{showDetail.Status}})</p>
-            </div>
-            <div ng-show="newShow.SeriesName" id='placeholder' class="col-md-6">
-                <p><h4>Genre:</h4><span ng-repeat="genre in genres"> <span class="label label-default">{{genre}}</span></span></p>
-                <p><h4>Rating:</h4><rating ng-model="showDetail.Rating" max="10" readonly="true"></rating></p>
-                <img class="boxShadow" ng-src="{{showDetail.fanart && '/assets/cache/'+showDetail.fanart || ''}}" style="width:100%;">
 
+            <div class="row col-md-8">
+                <div class="row" class="col-md-6" ng-hide="showDetail.poster" ng-animate="'animate'">
+                    <div class="col-md-6 text-center">
+                        <h1 class="" style="color: rgb(101, 129, 170);">Watchlist</h1>
+                        <p class="lead  italic" style="color: rgb(90, 90, 90);">modify your list of shows to track</p>
+                    </div> <!-- End header text -->
+                </div>
+                <!-- Input field for new shows -->
+                <div class="col-md-12">
+                    <form class="show-form" >
+                        <div class="form-group has-feedback">
+                            <!--<label for="addshow">Add new series</label>-->
+                            <div class="input-group" class="col-md-6">
+                                <input id="addshow" type="text"
+                                    class="form-control"
+                                    placeholder="Search for series"
+                                    ng-model="newShow"
+                                    typeahead="tvdbshow as tvdbshow.SeriesName for tvdbshow in getTVDBShows($viewValue)"
+                                    typeahead-loading="loadingShows"
+                                    typeahead-min-length="4"
+                                    typeahead-wait-ms="750"
+                                    style="background-color: rgba(255, 255, 255, 0.7);"/>
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary" ng-click="addShow()" ng-disabled="!(newShow.SeriesName)">
+                                        <strong>Add Show</strong>
+                                    </button>
+                                </span>
+                            </div>
+                            <span ng-show="loadingShows">
+                                <span class="fa fa-spinner fa-spin form-control-feedback" style="color: black;right: 91px;z-index: 100; top: 0px;font-size: 1.3em;"></span>
+                                <span class="form-control-feedback" style="color: rgba(0, 0, 0, 0.3);right: 170px;z-index: 100; top: 0px;font-size: 1.3em;">Searching</span>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <!--End input field -->
+                
+                <!--Details of searched show-->
+                <div ng-show="newShow.SeriesName" class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-10 series-name" tooltip-placement="left" tooltip-popup-delay="1000" tooltip="tvdbId: {{newShow.id}}">{{newShow.SeriesName}}</div>
+                        <div class="col-md-2 first-aired">{{newShow.FirstAired | date: 'yyyy'}}</div>
+                    </div>
+                    
+                    <img ng-src="{{bannerImg}}" style="width:100%;max-height:140px"  onerror="imgError(this);" ng-hide="noBanner">
+                    
+                    <br/><br/><br/>
+                    
+                    <p class="text-justify">{{newShow.Overview}}</p>
+                    
+                    <br/>
+                    
+                    <div class="row">
+                        <span class="col-md-4"><strong>{{showDetail.Episodes.length}} Episodes ({{showDetail.Status}})</strong></span>
+                        <span class="col-md-4"><!--placeholder--></span>
+                        <span class="col-md-4 text-right"><rating ng-model="showDetail.Rating" max="10" readonly="true"></rating></p></span>
+                    </div>
+                    <!-- Genres -->
+                    <div class="text-right"><span ng-animate="'animate'" ng-repeat="genre in genres"> <span class="label label-default">{{genre}}</span></span></div>
+                    
+                    <!--jays feature request-->
+                    <a href="http://slist.amiami.com/top/search/list?s_keywords={{showDetail.SeriesName}}&submit=Search&pagemax=20"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                </div>
             </div>
-            <!--<div ng-show="showDetail.id" class="col-md-12">-->
-            <!--    <pre>{{showDetail | json}}</pre>-->
-            <!--</div>-->
+            <div ng-show="newShow.SeriesName" id='placeholder' class="col-md-4" ng-show="showDetail.poster">
+                <img class="boxShadow" ng-src="{{showDetail.poster && '/assets/cache/'+showDetail.poster || ''}}" style="width:100%;" onerror="imgError(this);">
+            </div>
+            <!-- End Search Result Details -->
         </div>
     </div>
 </header>
 <div class="container">
-    <!-- Add show -->
 
     <!-- Display current list -->
     <div class="row">

@@ -63,6 +63,7 @@ angular.module('animuterApp')
           $scope.genres = $scope.splitPipes(details.Genre);
           $scope.showDetail.Genre = $scope.genres;
           $scope.showDetail.Actors = $scope.splitPipes(details.Actors);
+          $scope.noBanner = (details.banner === null) ? true : false;
           //console.log($scope.genres);
           // setTimeout(function () {
           //   console.log('should be safe...');
@@ -81,4 +82,16 @@ angular.module('animuterApp')
         return str.split("|");
       }
     }
+    
+
   });
+  
+    var imgError = function (image) {
+      setTimeout(function() {
+        image.onerror = "";
+        var preSrc = image.src;
+        image.src = preSrc;
+        console.log('Reloading failed image. '+image.src)
+        return true;
+      }, 1000);
+    }
