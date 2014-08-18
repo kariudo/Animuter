@@ -5,7 +5,7 @@
         <div class='row text-left'>
 
             <div class="row col-md-8">
-                <div class="row" class="col-md-6" ng-hide="showDetail.poster" ng-animate="'animate'">
+                <div class="row" class="col-md-6" ng-hide="showDetail.poster">
                     <div class="col-md-6 text-center">
                         <h1 class="" style="color: rgb(101, 129, 170);">Watchlist</h1>
                         <p class="lead  italic" style="color: rgb(90, 90, 90);">modify your list of shows to track</p>
@@ -62,7 +62,7 @@
                         <span class="col-md-4 text-right"><rating ng-model="showDetail.Rating" max="10" readonly="true"></rating></p></span>
                     </div>
                     <!-- Genres -->
-                    <div class="text-right"><span ng-animate="'animate'" ng-repeat="genre in genres"> <span class="label label-default">{{genre}}</span></span></div>
+                    <div class="text-right"><span ng-repeat="genre in genres"> <span class="label label-default">{{genre}}</span></span></div>
                     
                     <!--jays feature request-->
                     <a href="http://slist.amiami.com/top/search/list?s_keywords={{showDetail.SeriesName}}&submit=Search&pagemax=20"><span class="glyphicon glyphicon-shopping-cart"></span></a>
@@ -82,7 +82,7 @@
         <div class="col-lg-12">
              <h1 class="page-header">Shows:</h1>
 
-            <ul class="show-box nav nav-tabs nav-stacked col-md-6 col-lg-6 col-sm-12" ng-repeat="show in shows">
+            <ul class="show-box nav nav-tabs nav-stacked col-md-6 col-lg-6 col-sm-12 repeated-item" ng-repeat="show in shows">
                 <li>
                     <div class="row">
                         <div class="hidden-md hidden-lg col-sm-12 col-xs-12">
