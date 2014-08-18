@@ -1,14 +1,18 @@
 <div ng-include="'components/navbar/navbar.html'" class="ngnav"></div>
 <header class="hero-unit" id="banner" ng-style="(!showDetail.fanart && {'background':'#8CDCFA url(/assets/images/ene_ghost.png) center 15px no-repeat'} || '')">
-    <div id="backgroundmagic" ng-style="(showDetail.fanart && {'background-image':'url(/assets/cache/'+showDetail.fanart+')'} || '')"></div>
+    <div id="backgroundmagic" ng-show="fanartBackground" ng-style="(fanartBackground && {'background-image':fanartBackground} || '')"></div>
+    <div style="position:absolute; top:0;left:0;z-index:9999;">
+        <button ng-click="setTestData()">Test</button>
+        <button ng-click="clearTestData()">Clear</button>
+    </div>
     <div class="container">
         <div class='row text-left'>
 
             <div class="row col-md-8">
-                <div class="row" class="col-md-6" ng-hide="showDetail.poster">
+                <div class="row animate-hide" ng-hide="newShow.SeriesName">
                     <div class="col-md-6 text-center">
-                        <h1 class="" style="color: rgb(101, 129, 170);">Watchlist</h1>
-                        <p class="lead  italic" style="color: rgb(90, 90, 90);">modify your list of shows to track</p>
+                        <h1 style="color: rgb(101, 129, 170);" class="animate-hide" ng-hide="newShow.SeriesName">Watchlist</h1>
+                        <p class="lead italic animate-hide" style="color: rgb(90, 90, 90);" ng-hide="newShow.SeriesName">modify your list of shows to track</p>
                     </div> <!-- End header text -->
                 </div>
                 <!-- Input field for new shows -->
@@ -42,7 +46,7 @@
                 <!--End input field -->
                 
                 <!--Details of searched show-->
-                <div ng-show="newShow.SeriesName" class="col-md-12">
+                <div ng-show="newShow.SeriesName" class="col-md-12" class="animate-hide">
                     <div class="row">
                         <div class="col-md-10 series-name" tooltip-placement="left" tooltip-popup-delay="1000" tooltip="tvdbId: {{newShow.id}}">{{newShow.SeriesName}}</div>
                         <div class="col-md-2 first-aired">{{newShow.FirstAired | date: 'yyyy'}}</div>
@@ -65,10 +69,10 @@
                     <div class="text-right"><span ng-repeat="genre in genres"> <span class="label label-default">{{genre}}</span></span></div>
                     
                     <!--jays feature request-->
-                    <a href="http://slist.amiami.com/top/search/list?s_keywords={{showDetail.SeriesName}}&submit=Search&pagemax=20"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    <a target="_blank" href="http://slist.amiami.com/top/search/list?s_keywords={{showDetail.SeriesName}}&submit=Search&pagemax=20"><span class="glyphicon glyphicon-shopping-cart" tooltip="Buyfag? Click here!" tooltip-placement="right"></span></a>
                 </div>
             </div>
-            <div ng-show="newShow.SeriesName" id='placeholder' class="col-md-4" ng-show="showDetail.poster">
+            <div ng-show="newShow.SeriesName" id='placeholder' class="col-md-4" ng-show="showDetail.poster && newShow.SeriesName">
                 <img class="boxShadow" ng-src="{{showDetail.poster && '/assets/cache/'+showDetail.poster || ''}}" style="width:100%;" onerror="imgError(this);">
             </div>
             <!-- End Search Result Details -->

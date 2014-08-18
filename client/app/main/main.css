@@ -23,6 +23,7 @@
     background-position: -100px -100px;
     /*text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);*/
     /*background: #4393B9;*/
+    box-shadow: black 0px -2px 17px -1px;
 }
 
 .footer {
@@ -121,13 +122,6 @@
 
 /*Animation*/
 
-
-/*
-  We're using CSS transitions for when
-  the enter and move events are triggered
-  for the element that has the .repeated-item
-  class
-*/
 .repeated-item.ng-enter, .repeated-item.ng-move {
   -webkit-transition:0.5s linear all;
   -moz-transition:0.5s linear all;
@@ -136,22 +130,12 @@
   opacity:0;
 }
 
-/*
- The ng-enter-active and ng-move-active
- are where the transition destination properties
- are set so that the animation knows what to
- animate.
-*/
+
 .repeated-item.ng-enter.ng-enter-active,
 .repeated-item.ng-move.ng-move-active {
   opacity:1;
 }
 
-/*
-  We're using CSS keyframe animations for when
-  the leave event is triggered for the element
-  that has the .repeated-item class
-*/
 .repeated-item.ng-leave {
   -webkit-animation:0.5s my_animation;
   -moz-animation:0.5s my_animation;
@@ -164,10 +148,6 @@
   to { opacity:0; }
 }
 
-/*
-  Unfortunately each browser vendor requires
-  its own definition of keyframe animation code...
-*/
 @-webkit-keyframes my_animation {
   from { opacity:1; }
   to { opacity:0; }
@@ -182,3 +162,36 @@
   from { opacity:1; }
   to { opacity:0; }
 }
+
+
+
+  .animate-hide {
+    height:50px;
+    line-height:1em;
+  }
+
+/*transition properties of hide/show*/
+  .animate-hide.ng-hide-add, .animate-hide.ng-hide-remove {
+    -webkit-transition:all linear 0.3s;
+    -moz-transition:all linear 0.3s;
+    -o-transition:all linear 0.3s;
+    transition:all linear 0.3s;
+    display:block!important;
+  }
+  
+/*Hide an element*/
+  .animate-hide.ng-hide-add.ng-hide-add-active, /* while hidden */
+  .animate-hide.ng-hide-remove { /* for when to be made visibile */
+    opacity:0;
+    height:0;
+    line-height:0em;
+  }
+
+/*Show an element*/
+  .animate-hide.ng-hide-add, /* for when to be made hidden */
+  .animate-hide.ng-hide-remove.ng-hide-remove-active { /* while shown */
+    opacity:1;
+    height:50px;
+    line-height:1em;
+  }
+  
