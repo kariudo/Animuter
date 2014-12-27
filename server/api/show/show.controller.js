@@ -88,8 +88,8 @@ exports.tvdbDetail = function (req, res) {
       getBanner(detail.banner);
       getBanner(detail.poster, true);
       getBanner(detail.fanart);
-      
-     return res.json(200, detail); 
+
+     return res.json(200, detail);
    });
 };
 

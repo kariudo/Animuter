@@ -1,7 +1,7 @@
 <div ng-include="'components/navbar/navbar.html'" class="ngnav"></div>
 <header class="hero-unit" id="banner" ng-style="(!showDetail.fanart && {'background':'#8CDCFA url(/assets/images/ene_ghost.png) center 15px no-repeat'} || '')">
     <div id="backgroundmagic" ng-show="fanartBackground" ng-style="(fanartBackground && {'background-image':fanartBackground} || '')"></div>
-    <div style="position:absolute; top:0;left:0;z-index:9999;">
+    <div style="position:absolute; top:20px;left:0;z-index:9999;">
         <button ng-click="setTestData()">Test</button>
         <button ng-click="clearTestData()">Clear</button>
     </div>
@@ -44,22 +44,22 @@
                     </form>
                 </div>
                 <!--End input field -->
-                
+
                 <!--Details of searched show-->
                 <div ng-show="newShow.SeriesName" class="col-md-12" class="animate-hide">
                     <div class="row">
                         <div class="col-md-10 series-name" tooltip-placement="left" tooltip-popup-delay="1000" tooltip="tvdbId: {{newShow.id}}">{{newShow.SeriesName}}</div>
                         <div class="col-md-2 first-aired">{{newShow.FirstAired | date: 'yyyy'}}</div>
                     </div>
-                    
+
                     <img ng-src="{{bannerImg}}" style="width:100%;max-height:140px"  onerror="imgError(this);" ng-hide="noBanner">
-                    
+
                     <br/><br/><br/>
-                    
+
                     <p class="text-justify">{{newShow.Overview}}</p>
-                    
+
                     <br/>
-                    
+
                     <div class="row">
                         <span class="col-md-4"><strong>{{showDetail.Episodes.length}} Episodes ({{showDetail.Status}})</strong></span>
                         <span class="col-md-4"><!--placeholder--></span>
@@ -67,7 +67,7 @@
                     </div>
                     <!-- Genres -->
                     <div class="text-right"><span ng-repeat="genre in genres"> <span class="label label-default">{{genre}}</span></span></div>
-                    
+
                     <!--jays feature request-->
                     <a target="_blank" href="http://slist.amiami.com/top/search/list?s_keywords={{showDetail.SeriesName}}&submit=Search&pagemax=20"><span class="glyphicon glyphicon-shopping-cart" tooltip="Buyfag? Click here!" tooltip-placement="right"></span></a>
                 </div>
@@ -97,7 +97,7 @@
                         <div class="col-md-2 hidden-xs hidden-sm">
                             <img ng-src="/assets/cache/thumbs/{{show.poster}}" class="show-thumb" />
                         </div>
-                        
+
                         <div class="col-md-10 show-list-details">
                             <div class="row">
                                 <div class="show-title col-md-10">

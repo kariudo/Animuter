@@ -5,7 +5,7 @@ angular.module('animuterApp')
     $scope.shows = [];
     //$scope.showDetail = {};
     $scope.$watch('newShow', function() {
-      if ($scope.newShow !== undefined && $scope.newShow.SeriesName) { 
+      if ($scope.newShow !== undefined && $scope.newShow.SeriesName) {
         // if a show has been selected a name should be defined, get detail on series
         $scope.getTVDBDetail($scope.newShow.id);
 
@@ -28,7 +28,10 @@ angular.module('animuterApp')
           if(img.complete){
             clearInterval(int);
             $scope.fanartBackground = 'url('+img.src+')';
+            $scope.$apply(); // make sure the page knows we just stuffed that in there...
             console.log('background image loaded');
+          } else {
+            console.log('still loading background...');
           }
         }, 50);
       }
@@ -59,11 +62,11 @@ angular.module('animuterApp')
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('show');
     });
-    
+
     // Typeahead
     //$scope.selected = undefined;
     $scope.getTVDBShows = function(val) {
-      return $http.get('http://animuter-c9-kariudo.c9.io/api/shows/tvdb/'+val)
+      return $http.get('/api/shows/tvdb/'+val)
         .then(function (res) {
           var tvdbShows = [];
           if (res.data=='null') return [];
@@ -78,10 +81,10 @@ angular.module('animuterApp')
           return tvdbShows;
       });
     };
-    
+
     $scope.getTVDBDetail = function (id) {
       $scope.safeToLoad = false;
-      return $http.get('http://animuter-c9-kariudo.c9.io/api/shows/tvdb/detail/'+id)
+      return $http.get('/api/shows/tvdb/detail/'+id)
         .then(function (res) {
           var details = res.data;
           $scope.showDetail = details;
@@ -99,22 +102,22 @@ angular.module('animuterApp')
           // }, 2000);
         });
     };
-  
+
     $scope.splitPipes = function (str) {
       if(str && str.length > 0) {
-        var re = /\|(.*)\|/; 
-        var subst = '$1'; 
+        var re = /\|(.*)\|/;
+        var subst = '$1';
         str = str.replace(re, subst);
         return str.split("|");
       }
     }
-    
+
     // Setup some data for testing UI without running search.
     $scope.clearTestData = function () {
       $scope.showDetail = '';
       $scope.newShow = '';
     }
-    
+
     $scope.setTestData = function () {
       $scope.newShow = {
         "seriesid": "261862",
