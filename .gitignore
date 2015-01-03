@@ -9,3 +9,5 @@ data
 .c9
 mongod
 cache
+.idea
+.DS_store

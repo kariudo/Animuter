@@ -1,0 +1,10 @@
+<div class="col-md-12" id="seriesDetail">
+<h1>{{show.SeriesName}}</h1>
+  <h2>{{show.yearAired}} - {{show.season}}</h2>
+  <h3>{{show.Overview}}</h3>
+  <div id="genres">
+    <span ng-repeat="genre in show.Genre">
+      <span class="label label-default">{{genre}}</span>
+      <span ng-if="!$last"> </span>
+  </div>
+</div>
