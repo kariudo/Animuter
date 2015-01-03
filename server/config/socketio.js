@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/torrent/torrent.socket').register(socket);
   require('../api/show/show.socket').register(socket);
 }
 

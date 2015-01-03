@@ -16,6 +16,7 @@ module.exports = function(app) {
   });
 
   // Insert routes below
+  app.use('/api/torrents', require('./api/torrent'));
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/shows', require('./api/show'));

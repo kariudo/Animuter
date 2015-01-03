@@ -42,9 +42,9 @@ var all = {
   },
 
   google: {
-    clientID:     process.env.GOOGLE_ID || 'id',
-    clientSecret: process.env.GOOGLE_SECRET || 'secret',
-    callbackURL:  process.env.DOMAIN + '/auth/google/callback'
+    clientID:     process.env.GOOGLE_ID || '398865130105-lq3bhku62uqflo048oblg6v6f421lu11.apps.googleusercontent.com', //'id',
+    clientSecret: process.env.GOOGLE_SECRET || 'mWrf7X0IKyyrIuVi3GUsqBdP', //'secret',
+    callbackURL:  process.env.DOMAIN ? process.env.DOMAIN + '/auth/google/callback' : 'http://localhost:9000/auth/google/callback'
   }
 };
 
