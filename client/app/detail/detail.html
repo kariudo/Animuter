@@ -1,10 +1,75 @@
-<div class="col-md-12" id="seriesDetail">
-<h1>{{show.SeriesName}}</h1>
-  <h2>{{show.yearAired}} - {{show.season}}</h2>
-  <h3>{{show.Overview}}</h3>
-  <div id="genres">
-    <span ng-repeat="genre in show.Genre">
-      <span class="label label-default">{{genre}}</span>
-      <span ng-if="!$last"> </span>
+<div ng-include="'components/navbar/navbar.html'" class="ngnav"></div>
+<div class="container">
+  <div class="hero-anime" id="seriesDetail" ng-style="heroBackground">
+    <div class="hero-overlay boxShadowLow">
+      <!--<h1>{{show.SeriesName}}</h1>-->
+      <!--<h2>{{show.yearAired}} - {{show.season}}</h2>-->
+      <!--<h3>{{show.Overview}}</h3>-->
+      <!--<div id="genres">-->
+      <!--<span ng-repeat="genre in show.Genre">-->
+        <!--<span class="label label-default">{{genre}}</span>-->
+        <!--<span ng-if="!$last"> </span>-->
+      <!--</span>-->
+      <!--</div>-->
+      <div class="container">
+        <div class='row text-left'>
+          <div class="row col-md-8">
+            <!--Details of searched show-->
+            <div ng-show="show.SeriesName" class="col-md-12" class="animate-hide">
+              <div class="row">
+                <div class="col-md-8 series-name" tooltip-placement="left" tooltip-popup-delay="1000" tooltip="tvdbId: {{show.id}}">{{show.SeriesName}}</div>
+                <div class="col-md-4 first-aired">{{show.yearAired}} - {{show.season}}</div>
+              </div>
+
+              <img class="boxShadowLow" ng-src="{{bannerImg}}" style="width:100%;max-height:140px;margin-top:20px;" ng-hide="noBanner">
+
+              <br/><br/><br/>
+
+              <p class="text-justify">{{show.Overview}}</p>
+
+              <br/>
+
+              <div class="row">
+                <span class="col-md-4"><strong>{{show.Episodes.length}} Episodes ({{show.Status}})</strong></span>
+                <span class="col-md-4"><!--placeholder--></span>
+                <span class="col-md-4 text-right"><rating ng-model="show.Rating" max="10" readonly="true"></rating></p></span>
+              </div>
+              <!-- Genres -->
+              <div class="text-right"><span ng-repeat="genre in show.genres"> <span class="label label-default">{{genre}}</span></span></div>
+
+              <!--jays feature request-->
+              <a target="_blank" href="http://slist.amiami.com/top/search/list?s_keywords={{show.SeriesName}}&submit=Search&pagemax=20"><span class="glyphicon glyphicon-shopping-cart" tooltip="Buyfag? Click here!" tooltip-placement="right"></span></a>
+            </div>
+          </div>
+          <div ng-show="show.SeriesName" id='placeholder' style="margin-left: 10px" class="col-md-4" ng-show="show.poster">
+            <img class="boxShadow" ng-src="{{show.poster && '/assets/cache/'+show.poster || ''}}" style="width:100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="col-md-12 boxShadowLow" id="torrents" ng-if="torrentCount">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th ng-repeat="header in torrentTableHeaders">
+              <a ng-click="sortBy(header.val)" ng-bind-html="getHeaderLabel($index)"></a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="torrent in torrents | orderBy:torrentSort:reverse">
+          <td><a href="{{torrent.href}}"><i class="fa fa-fw fa-download"></i></a></td>
+          <td>{{torrent.name}}</td>
+          <td>{{torrent.releaseTag}}</td>
+          <td>{{torrent.resolution}}</td>
+          <td>{{torrent.HD}}</td>
+          <td>{{torrent.size | bytes}}</td>
+          <td>{{torrent.downloads}}</td>
+          <td>{{torrent.seeds}}</td>
+          <td>{{torrent.leeches}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

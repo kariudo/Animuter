@@ -25,9 +25,14 @@ exports.show = function(req, res) {
 exports.find = function(req, res) {
   //return res.json(bigObject);
 
-  var nt = new NT("http://www.nyaa.eu");
+  var nt = new NT("http://www.nyaa.eu"),
+      term = req.params.name,
+      options = {
+        category: "enAnime",
+        filter: "trusted"
+      };
 
-  nt.search({term: req.params.name}, function(err, entries) {
+  nt.search(term, options, function(err, entries) {
     if (err) {
       return console.warn(err);
     }
@@ -40,9 +45,14 @@ exports.find = function(req, res) {
         console.log("Saved JSON object entries to file.");
       }
     });
+    var result = {
+      term: req.params.name,
+      count: entries.length,
+      results: entries
+    }
     // Respond without using express, there is an issue that is causing double output on large objects.
     res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.write(JSON.stringify(entries));
+    res.write(JSON.stringify(result));
     return res.end();
   });
 };
