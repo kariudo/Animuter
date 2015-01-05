@@ -29,7 +29,13 @@ exports.index = function(req, res) {
 
 // Get a single show
 exports.show = function(req, res) {
-  Show.findById(req.params.id, function (err, show) {
+  //Show.findById(req.params.id, function (err, show) {
+  //  if(err) { return handleError(res, err); }
+  //  if(!show) { return res.send(404); }
+  //  return res.json(show);
+  //});
+  // find single shows by tvdb id instead of monogo uuid
+  Show.findOne({'id':req.params.id}, function (err, show) {
     if(err) { return handleError(res, err); }
     if(!show) { return res.send(404); }
     return res.json(show);

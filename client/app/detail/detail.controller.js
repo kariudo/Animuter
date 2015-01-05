@@ -1,20 +1,20 @@
 'use strict';
 
 angular.module('animuterApp')
-  .controller('DetailCtrl', function ($scope,$stateParams, $http, $sce) {
+  .controller('DetailCtrl', function ($scope,$stateParams, $http, $sce, $timeout) {
     $scope.message = 'Hello';
     $scope.seriesid = $stateParams.id;
     $scope.torrentSort = '';
     $scope.reverse = false;
     $scope.torrentTableHeaders = [
       {label:"Name", val:'name'},
-      {label:"Tag", val:'releaseTag'},
-      {label:"Resolution", val:'resolution'},
-      {label:"HD", val:"HD"},
-      {label:"<i class=\"fa fa-floppy-o\"></i>", val:"size"},
-      {label:"<i class=\"fa fa-download\"></i>", val:"downloads"},
-      {label:"<i class=\"fa fa-arrow-circle-up\"></i>", val:"seeds"},
-      {label:"<i class=\"fa fa-arrow-circle-down\"></i>", val:"leeches"}
+      {label:"<i class=\"fa fa-group\"></i>", val:'releaseTag'},
+      {label:"<i class=\"fa fa-desktop\"></i>", val:'resolution', style:{'text-align':'center'}},
+      {label:"HD", val:"HD", style:{'text-align':'center'}},
+      {label:"<i class=\"fa fa-floppy-o\"></i>", val:"size", style:{'text-align':'center'}},
+      {label:"<i class=\"fa fa-download\"></i>", val:"downloads", style:{'text-align':'center'}},
+      {label:"<i class=\"fa fa-arrow-circle-up\"></i>", val:"seeds", style:{'text-align':'center'}},
+      {label:"<i class=\"fa fa-arrow-circle-down\"></i>", val:"leeches", style:{'text-align':'center'}}
     ];
 
     $scope.getHeaderLabel = function(index) {
@@ -34,7 +34,7 @@ angular.module('animuterApp')
         $scope.show.season = $scope.dateToSeason($scope.show.dateAired);
         $scope.heroBackground = {'background' : "url('/assets/cache/" + data.fanart + "')"};
         $scope.bannerImg = "/assets/cache/" + data.banner;
-        loadTorrents(data.SeriesName); // TODO - need an option for this to be overridden by a "search title" parameter in the object model
+        loadTorrents(); // TODO - need an option for this to be overridden by a "search title" parameter in the object model
       });
 
     $scope.dateToSeason = function(airDate) {
@@ -65,9 +65,14 @@ angular.module('animuterApp')
       }
 
       return season;
-    }
+    };
 
-    var loadTorrents = function(searchTerm) {
+    var loadTorrents = function() {
+      var options = $scope.show.torrentOptions || {};
+      var searchTerm = options.name || $scope.show.SeriesName;
+      if(options.resolution) searchTerm += " " + options.resolution;
+      if(options.tag) searchTerm += " " + options.tag;
+      console.log('Searching for "' + searchTerm + '" torrents.');
       var result = $http.get('/api/torrents/find/'+ searchTerm)
         .success(function(data){
           $scope.torrentCount = data.count;
@@ -78,12 +83,34 @@ angular.module('animuterApp')
         });
 
       return result;
-    }
+    };
 
     $scope.sortBy = function(col) {
       console.log("Resorting table by " + col);
       $scope.torrentSort = col;
       $scope.reverse = !$scope.reverse;
-    }
+    };
+
+    $scope.updateTorrentSearch = function () {
+      var startTime =  new Date().getTime();
+      $scope.updatingSearch = true;
+      return $http.put('/api/shows/' + $scope.show._id, {
+        torrentOptions:$scope.show.torrentOptions
+      }).success(function() {
+        console.log($scope.show.SeriesName + " torrent options updated.");
+        var elapsedTime = (new Date().getTime() - startTime);
+        if (elapsedTime >= 1000) {
+          $scope.updatingSearch = false;
+        } else {
+          $timeout(function () {
+            $scope.updatingSearch = false;
+          }, (1000 - elapsedTime));
+        }
+        loadTorrents();
+      }).error(function(err){
+        console.warn(err);
+        $scope.updatingSearch = false;
+      });
+    };
 
   });

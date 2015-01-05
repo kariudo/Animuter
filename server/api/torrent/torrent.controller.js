@@ -37,14 +37,14 @@ exports.find = function(req, res) {
       return console.warn(err);
     }
     //console.log(entries);
-    var fs = require('fs');
-    fs.writeFile("/tmp/testData.json", JSON.stringify(entries), function(err) {
-      if(err) {
-        console.log(err);
-      } else {
-        console.log("Saved JSON object entries to file.");
-      }
-    });
+    //var fs = require('fs');
+    //fs.writeFile("/tmp/testData.json", JSON.stringify(entries), function(err) {
+    //  if(err) {
+    //    console.log(err);
+    //  } else {
+    //    console.log("Saved JSON object entries to file.");
+    //  }
+    //});
     var result = {
       term: req.params.name,
       count: entries.length,

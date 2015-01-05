@@ -2,15 +2,6 @@
 <div class="container">
   <div class="hero-anime" id="seriesDetail" ng-style="heroBackground">
     <div class="hero-overlay boxShadowLow">
-      <!--<h1>{{show.SeriesName}}</h1>-->
-      <!--<h2>{{show.yearAired}} - {{show.season}}</h2>-->
-      <!--<h3>{{show.Overview}}</h3>-->
-      <!--<div id="genres">-->
-      <!--<span ng-repeat="genre in show.Genre">-->
-        <!--<span class="label label-default">{{genre}}</span>-->
-        <!--<span ng-if="!$last"> </span>-->
-      <!--</span>-->
-      <!--</div>-->
       <div class="container">
         <div class='row text-left'>
           <div class="row col-md-8">
@@ -47,12 +38,44 @@
         </div>
       </div>
     </div>
-  <div class="col-md-12 boxShadowLow" id="torrents" ng-if="torrentCount">
-    <table class="table table-striped">
+  </div>
+  <div class="col-md-12 boxShadowLow" id="torrents">
+    <!--<pre>-->
+      <!--Current Torrent Settings-->
+      <!--Search name: {{show.torrentOptions.name}}-->
+      <!--Resolution: {{show.torrentOptions.resolution}}-->
+      <!--Group: {{show.torrentOptions.tag}}-->
+    <!--</pre>-->
+    <div id="torrentFilters" class="container-fluid well well-sm" style="min-height: 30px">
+      <form class="form-inline">
+        <div class="form-group col-md-6">
+          <label for="torrentName"><i class="fa fa-search fa-lg"></i></label>
+          <input class="form-control" type="text" name="torrentName" id="torrentName" ng-model="show.torrentOptions.name" placeholder="{{show.SeriesName}}" size="50"/>
+        </div>
+        <div class="form-group col-md-3" style="text-align: right">
+          <label for="torrentTag"><i class="fa fa-group"></i></label>
+          <input class="form-control" type="text" name="torrentTag" id="torrentTag" ng-model="show.torrentOptions.tag"/>
+        </div>
+        <div class="form-group col-md-2" style="text-align: right">
+          <label for="torrentResolution"><i class="fa fa-desktop"></i></label>
+          <select class="form-control" name="torrentResolution" id="torrentResolution" ng-model="show.torrentOptions.resolution">
+            <option selected val=""></option>
+            <option val="1080">1080</option>
+            <option val="720">720</option>
+            <option val="480">480</option>
+          </select>
+        </div>
+        <span class="col-md-1" style="text-align: right">
+          <button ng-click="updateTorrentSearch()" class="btn btn-default"><i class="fa fa-refresh" ng-class="{'fa-spin': updatingSearch}"></i></button>
+        </span>
+      </form>
+    </div>
+    <div class="alert alert-warning" ng-hide="torrentCount">No torrents found. Adjust the above filters and refresh.</div>
+    <table  ng-if="torrentCount" class="table table-striped">
       <thead>
         <tr>
           <th></th>
-          <th ng-repeat="header in torrentTableHeaders">
+          <th ng-repeat="header in torrentTableHeaders" ng-style="header.style">
               <a ng-click="sortBy(header.val)" ng-bind-html="getHeaderLabel($index)"></a>
           </th>
         </tr>
@@ -62,12 +85,12 @@
           <td><a href="{{torrent.href}}"><i class="fa fa-fw fa-download"></i></a></td>
           <td>{{torrent.name}}</td>
           <td>{{torrent.releaseTag}}</td>
-          <td>{{torrent.resolution}}</td>
-          <td>{{torrent.HD}}</td>
-          <td>{{torrent.size | bytes}}</td>
-          <td>{{torrent.downloads}}</td>
-          <td>{{torrent.seeds}}</td>
-          <td>{{torrent.leeches}}</td>
+          <td style="text-align: center">{{torrent.resolution}}</td>
+          <td style="text-align: center"><i class="fa fa-check" ng-show="torrent.HD"></i></td>
+          <td style="text-align: center">{{torrent.size | bytes}}</td>
+          <td style="text-align: center">{{torrent.downloads}}</td>
+          <td style="text-align: center">{{torrent.seeds}}</td>
+          <td style="text-align: center">{{torrent.leeches}}</td>
         </tr>
       </tbody>
     </table>

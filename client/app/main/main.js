@@ -7,6 +7,6 @@ angular.module('animuterApp')
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl',
-        authenticate: true
+        authenticate: false
       });
   });

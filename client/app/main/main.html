@@ -1,10 +1,10 @@
 <div ng-include="'components/navbar/navbar.html'" class="ngnav"></div>
 <header class="hero-unit" id="banner" ng-style="(!showDetail.fanart && {'background':'#8CDCFA url(/assets/images/ene_ghost.png) center 15px no-repeat'} || '')">
     <div id="backgroundmagic" ng-show="fanartBackground" ng-style="(fanartBackground && {'background-image':fanartBackground} || '')"></div>
-    <div style="position:absolute; top:20px;left:0;z-index:9999;">
-        <button ng-click="setTestData()">Test</button>
-        <button ng-click="clearTestData()">Clear</button>
-    </div>
+    <!--<div style="position:absolute; top:20px;left:0;z-index:9999;">-->
+        <!--<button ng-click="setTestData()">Test</button>-->
+        <!--<button ng-click="clearTestData()">Clear</button>-->
+    <!--</div>-->
     <div class="container">
         <div class='row text-left'>
 
@@ -101,7 +101,7 @@
                         <div class="col-md-10 show-list-details">
                             <div class="row">
                                 <div class="show-title col-md-10">
-                                    <a href="/detail/{{show._id}}" tooltip="{{show.info}}">{{show.SeriesName | limitTo : 40}}</a>
+                                    <a href="/detail/{{show.id}}" tooltip="{{show.info}}">{{show.SeriesName | limitTo : 40}}</a>
                                 </div>
                                 <div class="show-date col-md-2 text-right">{{show.FirstAired | date : 'yyyy'}}</div>
                             </div>

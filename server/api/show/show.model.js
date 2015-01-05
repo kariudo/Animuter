@@ -28,10 +28,15 @@ var ShowSchema = new Schema({
     RatingCount: Number,
     SeasonNumber: Number,
     Overview: String,
-    FirstAired: Date 
+    FirstAired: Date
   }],
   active: Boolean,
-  subscribed: Boolean
+  subscribed: Boolean,
+  torrentOptions: {
+    name: String,
+    resolution: Number,
+    tag: String
+  }
 });
 
 module.exports = mongoose.model('Show', ShowSchema);
